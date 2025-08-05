@@ -2,6 +2,7 @@ package com.sivalabs.blog.config;
 
 import com.sivalabs.blog.ApplicationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -19,6 +20,8 @@ class WebMvcConfig implements WebMvcConfigurer {
         registry.addRedirectViewController("/", "/posts");
         registry.addRedirectViewController("/admin", "/admin/dashboard");
         registry.addViewController("/login").setViewName("user/login");
+        // To handle annoying .well-known/appspecific/com.chrome.devtools.json requests from Chrome Dev Tools
+        registry.addStatusController("/.well-known/**", HttpStatus.OK);
     }
 
     @Override
