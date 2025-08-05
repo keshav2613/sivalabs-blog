@@ -12,6 +12,7 @@ The application includes both public-facing features for readers and an administ
 - **Backend**:
     - Java
     - Spring Boot
+    - Spring Modulith
     - Spring Data JPA, PostgreSQL, Flyway
     - Spring Security
     - Maven
