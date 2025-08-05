@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:lang="|${#locale.language}-${#locale.country}|"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{app.title}">SivaLabs Blog</title>
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+<body class="bg-gray-50">
+
+<th:block th:insert="~{layout/topnav :: topnav}"></th:block>
+<th:block th:insert="~{layout/hero :: hero}"></th:block>
+<main layout:fragment="content" class="container mx-auto px-4 min-h-72">
+
+</main>
+<th:block th:insert="~{layout/footer :: footer}"></th:block>
+
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/alpinejs/dist/cdn.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}"></script>
+<script>
+    $(document).ready(function(){
+        <!-- JavaScript for Mobile Menu -->
+        $("#mobile-menu-button").click(function(){
+            $("#mobile-menu").toggleClass("hidden");
+        })
+    })
+</script>
+<th:block layout:fragment="script-content">
+
+</th:block>
+</body>
+</html>

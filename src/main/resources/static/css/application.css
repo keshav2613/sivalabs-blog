@@ -1,0 +1,106 @@
+@import "tailwindcss";
+@source "../../templates";
+@plugin "@tailwindcss/container-queries";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+/* Custom styles */
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    .post-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .post-content h3 {
+        font-size: 1.1rem;
+    }
+
+    .post-content pre {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .post-content blockquote {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+
+    .post-content ul, .post-content ol {
+        margin-left: 1rem;
+    }
+}
+
+/* Small screen adjustments */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    h1 {
+        font-size: 1.75rem !important;
+    }
+
+    h2 {
+        font-size: 1.5rem !important;
+    }
+
+    .post-content {
+        font-size: 0.95rem;
+    }
+}
+
+.post-content {
+    line-height: 1.8;
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+}
+
+.post-content h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.post-content h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.post-content ul, .post-content ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
+}
+
+.post-content pre {
+    background-color: #f1f5f9;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.post-content blockquote {
+    border-left: 4px solid #e2e8f0;
+    padding-left: 1rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}

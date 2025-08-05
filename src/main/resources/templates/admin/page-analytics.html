@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">}">
+<body>
+<div class="flex-1 pt-5 p-8" layout:fragment="content">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800" th:text="#{label.page_analytics}">Page Analytics</h1>
+    <div class="w-full">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-gray-800">Page Analytics</h2>
+            <a href="/admin/analytics" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+            </a>
+        </div>
+
+        <!-- Page Information -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">Page Information</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex items-center">
+                    <span class="font-semibold mr-2">Path:</span>
+                    <span th:text="${path}" class="text-gray-700">/path/to/page</span>
+                </div>
+                <div class="flex items-center" th:if="${analytics.lastViewedAt}">
+                    <span class="font-semibold mr-2">Last Viewed:</span>
+                    <span th:text="${#temporals.format(analytics.lastViewedAt, 'yyyy-MM-dd HH:mm:ss')}" class="text-gray-700">2023-01-01 00:00:00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Views Analytics -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">Page Views</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+                <!-- Total Views -->
+                <div class="bg-blue-100 p-4 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-blue-500 text-white p-3 rounded-full mr-4">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Total Views</p>
+                            <p class="text-xl font-bold" th:text="${analytics.viewsAllTime ?: 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Views Today -->
+                <div class="bg-green-100 p-4 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-green-500 text-white p-3 rounded-full mr-4">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Views Today</p>
+                            <p class="text-xl font-bold" th:text="${analytics.viewsToday ?: 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Views This Week -->
+                <div class="bg-indigo-100 p-4 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-indigo-500 text-white p-3 rounded-full mr-4">
+                            <i class="fas fa-calendar-week"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Views This Week</p>
+                            <p class="text-xl font-bold" th:text="${analytics.viewsThisWeek ?: 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Views This Month -->
+                <div class="bg-yellow-100 p-4 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-yellow-500 text-white p-3 rounded-full mr-4">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Views This Month</p>
+                            <p class="text-xl font-bold" th:text="${analytics.viewsThisMonth ?: 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unique Visitors Analytics -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">Unique Visitors</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+                <!-- Total Unique Visitors -->
+                <div class="bg-gray-100 p-4 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-gray-700 text-white p-3 rounded-full mr-4">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Total Unique Visitors</p>
+                            <p class="text-xl font-bold" th:text="${analytics.uniqueVisitorsAllTime ?: 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Unique Visitors Today -->
+                <div class="bg-gray-200 p-4 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-gray-600 text-white p-3 rounded-full mr-4">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Unique Visitors Today</p>
+                            <p class="text-xl font-bold" th:text="${analytics.uniqueVisitorsToday ?: 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Unique Visitors This Week -->
+                <div class="bg-purple-100 p-4 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-purple-500 text-white p-3 rounded-full mr-4">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Unique Visitors This Week</p>
+                            <p class="text-xl font-bold" th:text="${analytics.uniqueVisitorsThisWeek ?: 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Unique Visitors This Month -->
+                <div class="bg-red-100 p-4 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <div class="bg-red-500 text-white p-3 rounded-full mr-4">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Unique Visitors This Month</p>
+                            <p class="text-xl font-bold" th:text="${analytics.uniqueVisitorsThisMonth ?: 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

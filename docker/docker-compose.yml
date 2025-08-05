@@ -1,0 +1,39 @@
+name: 'sivalabs-blog'
+services:
+  postgres-db:
+    image: postgres:17-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  sivalabs-blog:
+    image: sivaprasadreddy/sivalabs-blog
+    container_name: sivalabs-blog
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_MAIL_HOST: mailhog
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+      - mailhog
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1024m

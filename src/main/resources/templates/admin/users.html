@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">}">
+<body>
+<div class="flex-1 pt-5 p-8" layout:fragment="content">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800" th:text="#{label.manage_users}">Manage Users</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <!-- Create User Form -->
+        <h2 class="text-xl font-bold mb-4 text-gray-800" th:text="#{label.create_user}">Create New User</h2>
+        <form method="post" action="#" th:action="@{/admin/users}" th:object="${user}">
+            <div class="grid grid-cols-1 gap-4 mb-4">
+                <div>
+                    <label for="name" class="block text-gray-700 font-medium mb-2" th:text="#{label.name}">Name</label>
+                    <input type="text" id="name" name="name"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           th:field="*{name}">
+                    <div class="text-red-600" th:if="${#fields.hasErrors('name')}"
+                         th:errors="*{name}" th:text="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700 font-medium mb-2"
+                           th:text="#{label.email}">Email</label>
+                    <input type="email" id="email" name="email"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           th:field="*{email}">
+                    <div class="text-red-600" th:if="${#fields.hasErrors('email')}"
+                         th:errors="*{email}" th:text="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+                <div>
+                    <label for="password" class="block text-gray-700 font-medium mb-2" th:text="#{label.password}">Password</label>
+                    <input type="password" id="password" name="password"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           th:field="*{password}">
+                    <div class="text-red-600" th:if="${#fields.hasErrors('password')}"
+                         th:errors="*{password}" th:text="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+
+                <div>
+                    <label for="role" class="block text-gray-700 font-medium mb-2" th:text="#{label.role}">Role</label>
+                    <select id="role" name="role"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            th:field="*{role}">
+                        <option th:each="r: ${roles}" th:value="${r}" th:label="${r}"></option>
+                    </select>
+                    <div class="text-red-600" th:if="${#fields.hasErrors('role')}"
+                         th:errors="*{role}" th:text="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+
+                <div class="text-red-600 font-bold"
+                     th:if="${!#lists.isEmpty(#fields.globalErrors())}"
+                     th:text="${#fields.globalErrors().getFirst()}" th:text-default="#{error.create_user_failed}">
+                    Failed to create user
+                </div>
+            </div>
+            <button type="submit"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                    th:text="#{label.submit}">Submit
+            </button>
+        </form>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <!-- Users Table -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+                <thead>
+                <tr class="bg-gray-200 text-gray-700">
+                    <th class="py-3 px-4 text-left" th:text="#{label.name}">Name</th>
+                    <th class="py-3 px-4 text-left" th:text="#{label.email}">Email</th>
+                    <th class="py-3 px-4 text-left" th:text="#{label.role}">Role</th>
+                </tr>
+                </thead>
+                <tbody id="categories-table-body">
+                <tr th:each="user : ${users}">
+                    <td class="py-3 px-4">
+                        <div class="font-medium text-gray-800" th:text="${user.name}">Name</div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="font-medium text-gray-800" th:text="${user.email}">Email</div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="font-medium text-gray-800" th:text="${user.role.name()}">Role</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:lang="|${#locale.language}-${#locale.country}|"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<!-- Hero Section -->
+<section th:fragment="hero" class="pt-20 pb-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col items-center justify-center min-h-[120px] mt-5">
+            <div class="mb-6 md:mb-0 flex flex-col justify-center text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-3" th:text="#{label.hero_welcome}">Welcome to SivaLabs Blog</h1>
+                <p class="text-xl mb-4" th:text="#{label.hero_description}">Exploring Java, Spring Boot, Microservices, and Cloud-Native technologies.</p>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

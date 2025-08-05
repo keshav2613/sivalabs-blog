@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:lang="|${#locale.language}-${#locale.country}|"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<!-- Pagination Controls -->
+<div th:fragment="pagination" class="flex justify-center mt-12" th:if="${pagination.hasData()}" >
+    <div class="inline-flex rounded-md shadow-sm">
+        <a id="first-page-link"
+           th:if="${!pagination.isFirstPage()}"
+           th:href="@{${pagination.getFirstPageLink()}}"
+           class="px-4 py-2 text-sm font-medium text-blue-600 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100">
+            <span th:text="#{label.first}">First</span>
+        </a>
+        <button id="first-page"
+                th:if="${pagination.isFirstPage()}"
+                type="button"
+                class="px-4 py-2 text-sm font-medium text-blue-600 bg-white border border-gray-300 rounded-l-lg opacity-50 cursor-not-allowed">
+            <span th:text="#{label.first}">First</span>
+        </button>
+
+        <a id="prev-page-link"
+           th:if="${pagination.hasPreviousPage()}"
+           th:href="@{${pagination.getPreviousPageLink()}}"
+           class="px-4 py-2 text-sm font-medium text-blue-600 bg-white border-t border-b border-r border-gray-300 hover:bg-gray-100">
+            <span th:text="#{label.previous}">Previous</span>
+        </a>
+        <button id="prev-page"
+                th:if="${!pagination.hasPreviousPage()}"
+                type="button"
+                class="px-4 py-2 text-sm font-medium text-blue-600 bg-white border-t border-b border-r border-gray-300 opacity-50 cursor-not-allowed">
+            <span th:text="#{label.previous}">Previous</span>
+        </button>
+
+        <div id="page-info" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-300">
+            <span th:text="#{label.page}">Page</span> <span id="current-page" th:text="${pagination.currentPageNo()}">1</span>
+            <span th:text="#{label.of}">of</span> <span id="total-pages" th:text="${pagination.totalPages()}">1</span>
+            (<span id="total-elements" th:text="${pagination.totalElements()}">1</span>)
+        </div>
+        <a id="next-page-link"
+           th:if="${pagination.hasNextPage()}"
+           th:href="@{${pagination.getNextPageLink()}}"
+           class="px-4 py-2 text-sm font-medium text-blue-600 bg-white border-t border-b border-r border-gray-300 hover:bg-gray-100">
+            <span th:text="#{label.next}">Next</span>
+        </a>
+        <button id="next-page"
+                th:if="${!pagination.hasNextPage()}"
+                type="button"
+                class="px-4 py-2 text-sm font-medium text-blue-600 bg-white border-t border-b border-r border-gray-300 opacity-50 cursor-not-allowed">
+            <span th:text="#{label.next}">Next</span>
+        </button>
+
+        <a id="last-page-link"
+           th:if="${!pagination.isLastPage()}"
+           th:href="@{${pagination.getLastPageLink()}}"
+           class="px-4 py-2 text-sm font-medium text-blue-600 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100">
+            <span th:text="#{label.last}">Last</span>
+        </a>
+        <button id="last-page"
+                th:if="${pagination.isLastPage()}"
+                type="button"
+                class="px-4 py-2 text-sm font-medium text-blue-600 bg-white border border-gray-300 rounded-r-lg opacity-50 cursor-not-allowed">
+            <span th:text="#{label.last}">Last</span>
+        </button>
+    </div>
+</div>
+</body>
+</html>

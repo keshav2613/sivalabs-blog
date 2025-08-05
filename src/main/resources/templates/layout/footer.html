@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:lang="|${#locale.language}-${#locale.country}|"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<body>
+<!-- Footer -->
+<footer th:fragment="footer" class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between">
+            <!-- About -->
+            <div class="md:w-1/3 mb-8 md:mb-0 p-1">
+                <h3 class="text-xl font-bold mb-4" th:text="#{label.footer_about}">About SivaLabs Blog</h3>
+                <p class="mb-4" th:text="#{label.footer_about.description}">SivaLabs Blog is a blog focused on Java, Spring Boot, Microservices, and Cloud-Native
+                    technologies.</p>
+                <div class="flex space-x-4">
+                    <a href="https://x.com/sivalabs" class="text-white hover:text-blue-400" target="_blank"><i
+                            class="fab fa-xl fa-twitter"></i></a>
+                    <a href="https://github.com/sivaprasadreddy" class="text-white hover:text-blue-400" target="_blank"><i
+                            class="fab fa-xl fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/ksivaprasadreddy/" class="text-white hover:text-blue-400"
+                       target="_blank"><i class="fab fa-xl fa-linkedin"></i></a>
+                    <a href="https://www.youtube.com/sivalabs" class="text-white hover:text-blue-400" target="_blank"><i
+                            class="fab fa-xl fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="md:w-1/3 mb-8 md:mb-0">
+                <h3 class="text-xl font-bold mb-4" th:text="#{label.footer_quick_links}">Quick Links</h3>
+                <ul>
+                    <li class="mb-2"><a href="/" class="hover:text-blue-400" th:text="#{label.home}">Home</a></li>
+                    <li class="mb-2"><a href="/contact" class="hover:text-blue-400" th:text="#{label.contact}">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+            <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2025</span> <span th:text="#{label.footer_copyright}">SivaLabs. All rights reserved.</span></p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<body>
+<div layout:fragment="content">
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <!-- Featured Image -->
+                <div class="mb-10">
+                    <img src="/images/covers/blog-cover-1.jpg" alt="title"
+                         th:src="@{${post.coverImage}}"
+                         th:alt="${post.title}"
+                         class="w-full h-auto max-h-96 object-cover rounded-lg shadow-lg">
+                </div>
+
+                <!-- Post Metadata -->
+                <div class="mb-8">
+                    <h1 class="text-3xl md:text-4xl font-bold my-4" th:text="${post.title}">Post title</h1>
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="/images/authors/user.jpg" alt="Author"
+                                th:src="@{${post.authorImage()}}"
+                                th:alt="${post.author()}">
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-800" th:text="${post.author}">Author</p>
+                            <div class="flex space-x-1 text-sm text-gray-600">
+                                <time datetime="2023-05-15" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-20 10:30</time>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category and Tags -->
+                <div class="mb-8 flex flex-wrap items-center gap-2">
+                    <a href="/categories/slug/posts"
+                       class="text-sm font-semibold text-blue-600 uppercase tracking-wider mr-2"
+                       th:href="@{'/categories/'+${post.category().slug}+'/posts'}"
+                     th:text="${post.category().label()}">Category</a>
+                    <span class="text-gray-400 mr-2">|</span>
+                    <a th:each="tag : ${post.tags}"
+                        href="/tags/slug/posts"
+                       class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full hover:bg-gray-200"
+                       th:text="${tag.label()}"
+                       th:href="@{'/tags/'+${tag.slug}+'/posts'}"
+                        >Tag</a>
+                </div>
+
+                <!-- Post Content -->
+                <div class="post-content text-gray-800" th:utext="${post.content}">
+                    Post content
+                </div>
+
+                <!-- Author Bio -->
+                <div class="mt-12 p-6 bg-gray-100 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <img class="h-16 w-16 rounded-full" src="/images/authors/user.jpg"
+                                 alt="Author"
+                                 th:src="@{${post.authorImage()}}"
+                                 th:alt="${post.author()}"
+                            >
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-bold" th:text="#{label.about_author}">About the Author</h3>
+                            <p class="text-gray-600" th:text="${post.authorBio}">Author Biodata</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-gray-50" id="comments">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-2xl font-bold mb-8 text-gray-800"><span th:text="#{label.comments}">Comments</span> (<span th:text="${comments.size()}">2</span>)</h2>
+
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6" th:each="comment : ${comments}" th:id="${'comment-'+comment.id}">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mr-4">
+                            <img class="h-12 w-12 rounded-full" src="/images/authors/user.jpg" alt="User" th:alt="${comment.name}">
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-lg font-semibold text-gray-800" th:text="${comment.name}">User</h3>
+                                <span class="text-sm text-gray-500" th:text="${#temporals.format(comment.createdAt, 'MMM dd, yyyy')}">May 16, 2023</span>
+                            </div>
+                            <p class="text-gray-700" th:utext="${comment.content}">comment text</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment Form -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800" th:text="#{label_leave_comment}">Leave a Comment</h3>
+                    <form method="post" action="#" th:method="post"
+                          th:action="@{'/posts/'+${post.slug}+'/comments'}" th:object="${comment}">
+                        <input type="hidden" name="postId" th:value="${post.id}"/>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <input type="text" class="px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+                                th:field="*{name}"
+                                placeholder="Name"
+                                th:placeholder="#{label.name}"
+                                required
+                            >
+                            <input type="email" class="px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+                                   th:field="*{email}"
+                                   placeholder="Email"
+                                   th:placeholder="#{label.email}"
+                                   required
+                            >
+                        </div>
+                        <div class="mb-4">
+                            <textarea
+                                    th:field="*{content}"
+                                    class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+                                    rows="4"
+                                    placeholder="Write your comment here..."
+                                    th:placeholder="#{label.comment_placeholder}"
+                                    required
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+                                th:text="#{label_post_comment}">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

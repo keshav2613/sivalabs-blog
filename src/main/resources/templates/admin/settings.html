@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">}">
+<body>
+<div class="flex-1 pt-5 p-8" layout:fragment="content">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800" th:text="#{label.manage_settings}">Manage Settings</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <!-- Settings Form -->
+        <form id="settings-form" method="post" action="#"
+              th:method="put"
+              th:action="@{/admin/settings}" th:object="${settings}">
+            <input type="hidden" name="id" th:value="${settings.id}">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="adminContactName" class="block text-gray-700 font-medium mb-2"
+                           th:text="#{label.admin_contact_name}">Admin Contact Name</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-user text-gray-400"></i>
+                        </div>
+                        <input type="text" id="adminContactName" name="adminContactName"
+                               th:field="*{adminContactName}"
+                               class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="text-red-600" th:if="${#fields.hasErrors('adminContactName')}"
+                         th:errors="*{adminContactName}" th:text-default="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+
+                <div>
+                    <label for="adminContactEmail" class="block text-gray-700 font-medium mb-2"
+                           th:text="#{label.admin_contact_email}">Admin Contact Email</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" id="adminContactEmail" name="adminContactEmail"
+                               th:field="*{adminContactEmail}"
+                               class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="text-red-600" th:if="${#fields.hasErrors('adminContactEmail')}"
+                         th:errors="*{adminContactEmail}" th:text-default="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+
+                <div>
+                    <label for="adminContactAddress" class="block text-gray-700 font-medium mb-2"
+                           th:text="#{label.admin_contact_address}">Admin Contact Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-map-marker-alt text-gray-400"></i>
+                        </div>
+                        <input type="text" id="adminContactAddress" name="adminContactAddress"
+                               th:field="*{adminContactAddress}"
+                               class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="text-red-600" th:if="${#fields.hasErrors('adminContactAddress')}"
+                         th:errors="*{adminContactAddress}" th:text-default="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+
+                <div>
+                    <label for="adminContactTwitter" class="block text-gray-700 font-medium mb-2"
+                           th:text="#{label.admin_contact_twitter}">Admin Contact Twitter</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fab fa-twitter text-gray-400"></i>
+                        </div>
+                        <input type="text" id="adminContactTwitter" name="adminContactTwitter"
+                               th:field="*{adminContactTwitter}"
+                               class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="text-red-600" th:if="${#fields.hasErrors('adminContactTwitter')}"
+                         th:errors="*{adminContactTwitter}" th:text-default="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+
+                <div>
+                    <label for="adminContactGithub" class="block text-gray-700 font-medium mb-2"
+                           th:text="#{label.admin_contact_github}">Admin Contact GitHub</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fab fa-github text-gray-400"></i>
+                        </div>
+                        <input type="text" id="adminContactGithub" name="adminContactGithub"
+                               th:field="*{adminContactGithub}"
+                               class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="text-red-600" th:if="${#fields.hasErrors('adminContactGithub')}"
+                         th:errors="*{adminContactGithub}" th:text-default="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+
+                <div>
+                    <label for="adminContactLinkedin" class="block text-gray-700 font-medium mb-2"
+                           th:text="#{label.admin_contact_linkedin}">Admin Contact LinkedIn</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fab fa-linkedin text-gray-400"></i>
+                        </div>
+                        <input type="text" id="adminContactLinkedin" name="adminContactLinkedin"
+                               th:field="*{adminContactLinkedin}"
+                               class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="text-red-600" th:if="${#fields.hasErrors('adminContactLinkedin')}"
+                         th:errors="*{adminContactLinkedin}" th:text-default="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+
+                <div>
+                    <label for="adminContactYoutube" class="block text-gray-700 font-medium mb-2"
+                           th:text="#{label.admin_contact_youtube}">Admin Contact YouTube</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fab fa-youtube text-gray-400"></i>
+                        </div>
+                        <input type="text" id="adminContactYoutube" name="adminContactYoutube"
+                               th:field="*{adminContactYoutube}"
+                               class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="text-red-600" th:if="${#fields.hasErrors('adminContactYoutube')}"
+                         th:errors="*{adminContactYoutube}" th:text-default="#{error.incorrect_data}">Incorrect data
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <div class="flex items-center">
+                    <div class="relative flex items-center">
+                        <input type="checkbox" id="auto-approve-comments" name="auto-approve-comments"
+                               th:field="*{autoApproveComment}"
+                               class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="auto-approve-comments" class="ml-2 flex items-center text-gray-700 font-medium">
+                            <span th:text="#{label.auto_approve_comments}">Auto approve Comments</span>
+                        </label>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-1 ml-6" th:text="#{label.auto_approve_comments.desc}">If checked, new
+                    comments will be automatically approved</p>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit"
+                        class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors flex items-center">
+                    <i class="fas fa-save mr-2"></i>
+                    <span th:text="#{label.save}">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

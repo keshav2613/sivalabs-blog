@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">
+<body>
+<div class="flex-1 pt-5 p-8" layout:fragment="content">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800" th:text="#{label.my_account}">My Account</h1>
+    <div class="p-2 pb-3" th:if="${successMessage != null}">
+        <p class="text-xl font-bold text-green-700" th:text="#{${successMessage}}">message</p>
+    </div>
+    <div class="p-2 pb-3" th:if="${errorMessage != null}">
+        <p class="text-xl font-bold text-red-700" th:text="#{${errorMessage}}">message</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Left Side: User Profile Form -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4 text-gray-800" th:text="#{label.my_profile}">My Profile</h2>
+            <form method="post" action="#"
+                 th:method="put" th:action="@{'/my-profile'}" th:object="${profile}">
+                <input type="hidden" name="id" th:value="${profile.id}"/>
+
+                <div class="grid grid-cols-1 gap-4 mb-4">
+                    <div>
+                        <label for="name" class="block text-gray-700 font-medium mb-2" th:text="#{label.name}">Name</label>
+                        <input type="text" id="name" name="name"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               th:field="*{name}">
+                        <div class="text-red-600" th:if="${#fields.hasErrors('name')}"
+                             th:errors="*{name}" th:text="#{error.incorrect_data}">Incorrect data
+                        </div>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium mb-2" th:text="#{label.email}">Email</label>
+                        <input type="email" id="email" name="email" readonly="readonly"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               th:field="*{email}">
+                        <div class="text-red-600" th:if="${#fields.hasErrors('email')}"
+                             th:errors="*{email}" th:text="#{error.incorrect_data}">Incorrect data
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="bio" class="block text-gray-700 font-medium mb-2" th:text="#{label.biodata}">Biodata</label>
+                        <textarea id="bio" name="bio" rows="10"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                  th:field="*{bio}"></textarea>
+                        <div class="text-red-600" th:if="${#fields.hasErrors('bio')}"
+                             th:errors="*{bio}" th:text-default="#{error.incorrect_data}">Incorrect data
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                        th:text="#{label.submit}">Submit</button>
+            </form>
+        </div>
+
+        <!-- Change Password Form -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4 text-gray-800" th:text="#{label.change_password}">Change Password</h2>
+            <form method="post" action="#"
+                 th:method="put" th:action="@{'/my-profile/password'}"
+                  th:object="${passwordChangeForm}">
+                <input type="hidden" name="id" th:value="${profile.id}"/>
+
+                <div class="grid grid-cols-1 gap-4 mb-4">
+                    <div>
+                        <label for="oldPassword" class="block text-gray-700 font-medium mb-2" th:text="#{label.old_password}">Old Password</label>
+                        <input type="password" id="oldPassword" name="oldPassword"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               th:field="*{oldPassword}">
+                        <div class="text-red-600" th:if="${#fields.hasErrors('oldPassword')}"
+                             th:errors="*{oldPassword}" th:text="#{error.incorrect_data}">Incorrect data
+                        </div>
+                    </div>
+                    <div>
+                        <label for="newPassword" class="block text-gray-700 font-medium mb-2" th:text="#{label.new_password}">New Password</label>
+                        <input type="password" id="newPassword" name="newPassword"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               th:field="*{newPassword}">
+                        <div class="text-red-600" th:if="${#fields.hasErrors('newPassword')}"
+                             th:errors="*{newPassword}" th:text="#{error.incorrect_data}">Incorrect data
+                        </div>
+                    </div>
+                    <div>
+                        <label for="confirmPassword" class="block text-gray-700 font-medium mb-2" th:text="#{label.confirm_password}">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               th:field="*{confirmPassword}">
+                        <div class="text-red-600" th:if="${#fields.hasErrors('confirmPassword')}"
+                             th:errors="*{confirmPassword}" th:text="#{error.incorrect_data}">Incorrect data
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                        th:text="#{label.change_password}">Change Password</button>
+            </form>
+            <div id="changePwdStatus" class="pt-2"></div>
+        </div>
+
+        <!-- User Image Form -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4 text-gray-800" th:text="#{label.my_profile_image}">My Profile Image</h2>
+            <div class="flex flex-col items-center">
+                <!-- Display user image if available, otherwise show placeholder -->
+                <div class="mb-6 w-48 h-48 overflow-hidden rounded-full border-2 border-gray-300 flex items-center justify-center">
+                    <img th:if="${profile.image != null && !profile.image.isEmpty()}" 
+                         th:src="${profile.image}" 
+                         alt="User Profile Image" 
+                         class="w-full h-full object-cover">
+                    <div th:if="${profile.image == null || profile.image.isEmpty()}" 
+                         class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500"
+                         th:text="#{label.my_profile_no_image}">
+                        No Image
+                    </div>
+                </div>
+
+                <!-- Image Upload Form -->
+                <form method="post" action="#"
+                     th:method="put" th:action="@{'/my-profile/image'}" th:object="${profile}" enctype="multipart/form-data">
+                    <input type="hidden" name="id" th:value="${profile.id}"/>
+                    <div class="mb-4">
+                        <label for="imageFile" class="block text-gray-700 font-medium mb-2"
+                        th:text="#{label.select_new_image}">Select New Image</label>
+                        <input type="file" id="imageFile" name="imageFile" accept="image/*"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required>
+                    </div>
+                    
+                    <button type="submit"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors w-full"
+                        th:text="#{label.upload_image}">
+                        Upload Image
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

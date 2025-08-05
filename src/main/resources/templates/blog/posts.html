@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<body>
+<div layout:fragment="content">
+    <!-- Blog Posts Section -->
+    <section id="blog-posts" class="pt-6 py-16">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Main Content - Posts Grid -->
+                <div class="lg:w-3/4">
+                    <!-- Posts Grid -->
+                    <div class="bg-white rounded-lg shadow-md" th:if="${posts.data().isEmpty()}">
+                        <div class="p-6 text-center">
+                            <h2 class="text-2xl font-bold mb-4 text-gray-800" th:text="#{label.no_posts}">No Posts</h2>
+                        </div>
+                    </div>
+                    <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden" th:each="post : ${posts.data}">
+                            <a href="/posts/slug" th:href="@{'/posts/'+${post.slug}}">
+                                <img src="/images/covers/blog-cover-1.jpg"
+                                     alt="post title"
+                                     th:src="@{${post.coverImage}}"
+                                     th:alt="${post.title}"
+                                     class="w-full h-48 object-cover">
+                            </a>
+                            <div class="p-6">
+                                <span class="text-xs font-semibold text-gray-800 uppercase tracking-wider"
+                                      th:text="${post.author}">Author</span>
+                                <span class="text-gray-400 mr-2">|</span>
+                                <span class="text-xs font-semibold text-gray-800 uppercase tracking-wider"
+                                      th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd')}">2025-01-20</span>
+                                <span class="text-gray-400 mr-2">|</span>
+                                <a href="/categories/spring-boot/posts"
+                                   th:href="@{'/categories/'+${post.categorySlug}+'/posts'}"
+                                   th:text="${post.categoryLabel}"
+                                   class="text-xs font-semibold  uppercase text-blue-600">
+                                    Category Label
+                                </a>
+                                <a href="/posts/slug"
+                                    th:href="@{'/posts/'+${post.slug}}"
+                                    >
+                                    <h3 class="text-xl font-bold mt-2 mb-3 text-blue-600"
+                                    th:text="${post.title}">Post Title</h3>
+                                </a>
+                                <p class="text-gray-600 mb-4" th:utext="${post.summary}">
+                                    Post summary.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <th:block th:insert="~{blog/fragments/pagination :: pagination}"></th:block>
+                </div>
+
+                <th:block th:insert="~{blog/fragments/sidebar :: sidebar}"></th:block>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

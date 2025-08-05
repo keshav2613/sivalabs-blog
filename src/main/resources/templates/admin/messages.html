@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">}">
+<body>
+<div class="flex-1 pt-5 p-8" layout:fragment="content">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800" th:text="#{label.manage_messages}">Manage Messages</h1>
+    <form method="post" action="/admin/messages/" th:method="post" th:action="@{/admin/messages}">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <!-- Action Buttons -->
+            <div class="flex justify-between mb-4">
+                <div class="flex space-x-2">
+                    <button id="delete-selected" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+                            hx-delete="/admin/messages"
+                            hx-on::before-request="checkMessagesSelected(event)"
+                            hx-swap="none">
+                        <i class="fas fa-trash-alt mr-2"></i> <span th:text="#{label.delete}">Delete</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Messages Table -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                    <thead>
+                    <tr class="bg-gray-200 text-gray-700">
+                        <th class="py-3 px-4 text-left w-12">
+                            <input type="checkbox" id="select-all" class="rounded">
+                        </th>
+                        <th class="py-3 px-4 text-left" th:text="#{label.name}">Name</th>
+                        <th class="py-3 px-4 text-left" th:text="#{label.email}">Email</th>
+                        <th class="py-3 px-4 text-left" th:text="#{label.subject}">Subject</th>
+                        <th class="py-3 px-4 text-left" th:text="#{label.content}">Content</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tags-table-body">
+                    <tr th:each="message : ${messages.data}">
+                        <td class="py-3 px-4">
+                            <input type="checkbox" class="message-checkbox rounded"
+                                   name="messageIds" th:value="${message.id}">
+                        </td>
+                        <td class="py-3 px-4">
+                            <div class="font-medium text-gray-800" th:text="${message.name}">Name</div>
+                        </td>
+                        <td class="py-3 px-4">
+                            <div class="font-medium text-gray-800" th:text="${message.email}">Email</div>
+                        </td>
+                        <td class="py-3 px-4">
+                            <div class="font-medium text-gray-800" th:text="${message.subject}">Subject</div>
+                        </td>
+                        <td class="py-3 px-4">
+                            <div class="font-medium text-gray-800" th:text="${message.getContentSummary()}">content
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <th:block th:insert="~{blog/fragments/pagination :: pagination}"></th:block>
+        </div>
+    </form>
+</div>
+<th:block layout:fragment="script-content">
+    <script>
+        $(document).ready(function () {
+            $("#select-all").change(function () {
+                let isChecked = $(this).prop("checked");
+                $(".message-checkbox").prop("checked", isChecked);
+            });
+
+            $(".message-checkbox").change(function () {
+                let allChecked = $(".message-checkbox:checked").length === $(".message-checkbox").length;
+                $("#select-all").prop("checked", allChecked);
+            });
+        });
+
+        function checkMessagesSelected(event) {
+            if ($(".message-checkbox:checked").length === 0) {
+                event.preventDefault();
+                alert("Select at least one message to delete.");
+                return;
+            }
+            if (confirm('Are you sure you want to proceed?')) {
+                event.detail.issueRequest();
+            }
+        }
+    </script>
+</th:block>
+</body>
+</html>

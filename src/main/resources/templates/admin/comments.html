@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">}">
+<body>
+<div class="flex-1 pt-5 p-8" layout:fragment="content">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800" th:text="#{label.manage_comments}">Manage Comments</h1>
+
+    <form method="post" action="/admin/comments/" th:method="post" th:action="@{/admin/comments}">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <!-- Action Buttons -->
+        <div class="flex justify-between mb-4">
+            <div class="flex space-x-2">
+                <button id="delete-selected" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+                        hx-delete="/admin/comments"
+                        hx-on::before-request="checkCommentsSelected(event)"
+                        hx-swap="none"
+                        sec:authorize="hasRole('ROLE_ADMIN')">
+                    <i class="fas fa-trash-alt mr-2"></i> <span th:text="#{label.delete}">Delete</span>
+                </button>
+                <button id="approve-selected" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md"
+                        hx-put="/admin/comments/approve"
+                        hx-swap="none">
+                    <i class="fas fa-check mr-2"></i> <span th:text="#{label.approve}">Approve</span>
+                </button>
+                <button id="reject-selected" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md"
+                        hx-put="/admin/comments/spam"
+                        hx-swap="none">
+                    <i class="fas fa-ban mr-2"></i> <span th:text="#{label.mark_as_spam}">Mark as Spam</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Comments Table -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+                <thead>
+                <tr class="bg-gray-200 text-gray-700">
+                    <th class="py-3 px-4 text-left w-12">
+                        <input type="checkbox" id="select-all" class="rounded">
+                    </th>
+                    <th class="py-3 px-4 text-left" th:text="#{label.name}">Name</th>
+                    <th class="py-3 px-4 text-left" th:text="#{label.comment}">Comment</th>
+                    <th class="py-3 px-4 text-left" th:text="#{label.post}">Post</th>
+                    <th class="py-3 px-4 text-left" th:text="#{label.date}">Date</th>
+                    <th class="py-3 px-4 text-left" th:text="#{label.status}">Status</th>
+                    <th class="py-3 px-4 text-left" th:text="#{label.actions}">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="comments-table-body">
+                <!-- Comments will be dynamically loaded here -->
+                <tr th:each="comment : ${comments.data}">
+                    <td class="py-3 px-4">
+                        <input type="checkbox" name="commentIds" class="comment-checkbox rounded" th:value="${comment.id}">
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="font-medium text-gray-800" th:text="${comment.name}">name</div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <span class="text-gray-800" th:text="${comment.getSummary()}">comment summary</span>
+                    </td>
+                    <td class="py-3 px-4">
+                        <a class="text-blue-600"
+                           href="/posts/post-slug"
+                           th:href="@{'/posts/' + ${comment.post.slug} }"
+                           th:text="${comment.post.title}">
+                            Post Title
+                        </a>
+                    </td>
+                    <td class="py-3 px-4" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">date</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-1 rounded-full text-xs"
+                              th:classappend="${comment.getStatusStyles()}"
+                              th:text="${comment.status}">status</span>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="flex space-x-2">
+                            <a class="text-blue-600 hover:text-blue-800" th:title="#{label.view}"
+                               href="/posts/post-slug/#comment-id"
+                               th:href="@{'/posts/' + ${comment.post.slug} + '#comment-' + ${comment.id} }"
+                               target="_blank">
+                                <i class="fas fa-external-link"></i>
+                            </a>
+                            <button class="text-red-600 hover:text-red-800" th:title="#{label.delete}" sec:authorize="hasRole('ROLE_ADMIN')"
+                                    th:hx-delete="@{'/admin/comments?commentIds='+${comment.id}}"
+                                    hx-confirm="Are you sure you want to delete?"
+                                    hx-params="_csrf"
+                                    hx-swap="none">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <th:block th:insert="~{blog/fragments/pagination :: pagination}"></th:block>
+
+    </div>
+    </form>
+</div>
+<th:block layout:fragment="script-content">
+    <script>
+        $(document).ready(function() {
+            $("#select-all").change(function() {
+                let isChecked = $(this).prop("checked");
+                $(".comment-checkbox").prop("checked", isChecked);
+            });
+
+            $(".comment-checkbox").change(function() {
+                let allChecked = $(".comment-checkbox:checked").length === $(".comment-checkbox").length;
+                $("#select-all").prop("checked", allChecked);
+            });
+        });
+
+        function checkCommentsSelected(event) {
+            if ($(".comment-checkbox:checked").length === 0) {
+                event.preventDefault();
+                alert("Select at least one comment to delete.");
+                return;
+            }
+            if (confirm('Are you sure you want to proceed?')) {
+                event.detail.issueRequest();
+            }
+        }
+    </script>
+</th:block>
+</body>
+</html>

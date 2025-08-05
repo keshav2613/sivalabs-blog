@@ -1,0 +1,114 @@
+{
+  "posts": [
+    {
+      "title": "Getting Started with Spring Boot 3",
+      "slug": "getting-started-with-spring-boot-3",
+      "publishedDate": "2025-01-01",
+      "author": "",
+      "category": "spring-boot",
+      "tags": ["Java","Spring Boot"],
+      "image": "getting-started-with-spring-boot-3.png",
+      "file": "getting-started-with-spring-boot-3.md"
+    },
+    {
+      "title": "Spring Boot REST API Best Practices",
+      "slug": "spring-boot-rest-api-best-practices",
+      "publishedDate": "2023-01-15",
+      "author": "",
+      "category": "spring-boot",
+      "tags": ["Java", "Spring Boot", "REST API", "Best Practices"],
+      "image": "spring-boot-rest-api-best-practices.png",
+      "file": "spring-boot-rest-api-best-practices.md"
+    },
+    {
+      "title": "Spring Security OAuth2 Implementation Guide",
+      "slug": "spring-security-oauth2-implementation-guide",
+      "publishedDate": "2023-02-10",
+      "author": "",
+      "category": "spring-boot",
+      "tags": ["Java", "Spring Boot", "Spring Security", "OAuth"],
+      "image": "spring-security-oauth2-implementation-guide.png",
+      "file": "spring-security-oauth2-implementation-guide.md"
+    },
+    {
+      "title": "Spring Data JPA Advanced Techniques",
+      "slug": "spring-data-jpa-advanced-techniques",
+      "publishedDate": "2023-03-05",
+      "author": "",
+      "category": "spring-boot",
+      "tags": ["Java", "Spring Boot", "Spring Data", "JPA", "Hibernate"],
+      "image": "spring-data-jpa-advanced-techniques.png",
+      "file": "spring-data-jpa-advanced-techniques.md"
+    },
+    {
+      "title": "Comprehensive Testing in Spring Boot",
+      "slug": "comprehensive-testing-in-spring-boot",
+      "publishedDate": "2023-04-20",
+      "author": "",
+      "category": "testing",
+      "tags": ["Java", "Spring Boot", "Testing", "JUnit", "Mockito", "Testcontainers"],
+      "image": "comprehensive-testing-in-spring-boot.png",
+      "file": "comprehensive-testing-in-spring-boot.md"
+    },
+    {
+      "title": "Building Microservices with Spring Boot",
+      "slug": "building-microservices-with-spring-boot",
+      "publishedDate": "2023-05-15",
+      "author": "",
+      "category": "microservices",
+      "tags": ["Java", "Spring Boot", "Microservices", "Spring Cloud"],
+      "image": "building-microservices-with-spring-boot.png",
+      "file": "building-microservices-with-spring-boot.md"
+    },
+    {
+      "title": "Monitoring Spring Boot Applications with Actuator",
+      "slug": "monitoring-spring-boot-applications-with-actuator",
+      "publishedDate": "2023-06-10",
+      "author": "",
+      "category": "spring-boot",
+      "tags": ["Java", "Spring Boot", "Monitoring", "Actuator", "Prometheus", "Grafana"],
+      "image": "monitoring-spring-boot-applications-with-actuator.png",
+      "file": "monitoring-spring-boot-applications-with-actuator.md"
+    },
+    {
+      "title": "Deploying Spring Boot Applications to Kubernetes",
+      "slug": "deploying-spring-boot-applications-to-kubernetes",
+      "publishedDate": "2023-07-05",
+      "author": "",
+      "category": "devops",
+      "tags": ["Java", "Spring Boot", "Kubernetes", "DevOps", "Docker"],
+      "image": "deploying-spring-boot-applications-to-kubernetes.png",
+      "file": "deploying-spring-boot-applications-to-kubernetes.md"
+    },
+    {
+      "title": "Reactive Programming with Spring WebFlux",
+      "slug": "reactive-programming-with-spring-webflux",
+      "publishedDate": "2023-08-20",
+      "author": "",
+      "category": "spring-boot",
+      "tags": ["Java", "Spring Boot", "Reactive", "WebFlux", "Project Reactor"],
+      "image": "reactive-programming-with-spring-webflux.png",
+      "file": "reactive-programming-with-spring-webflux.md"
+    },
+    {
+      "title": "Containerizing Spring Boot Applications with Docker",
+      "slug": "containerizing-spring-boot-applications-with-docker",
+      "publishedDate": "2023-09-15",
+      "author": "",
+      "category": "devops",
+      "tags": ["Java", "Spring Boot", "Docker", "DevOps", "Containers"],
+      "image": "containerizing-spring-boot-applications-with-docker.png",
+      "file": "containerizing-spring-boot-applications-with-docker.md"
+    },
+    {
+      "title": "Building GraphQL APIs with Spring Boot",
+      "slug": "building-graphql-apis-with-spring-boot",
+      "publishedDate": "2023-10-10",
+      "author": "",
+      "category": "spring-boot",
+      "tags": ["Java", "Spring Boot", "GraphQL", "API"],
+      "image": "building-graphql-apis-with-spring-boot.png",
+      "file": "building-graphql-apis-with-spring-boot.md"
+    }
+  ]
+}

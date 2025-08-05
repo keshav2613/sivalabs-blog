@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:lang="|${#locale.language}-${#locale.country}|"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{app.title}">SivaLabs Blog</title>
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/application.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+<th:block th:insert="~{layout/topnav :: topnav}"></th:block>
+<div class="pt-16 flex flex-col md:flex-row flex-grow">
+    <!-- Left Side Navigation Menu -->
+    <div class="w-full md:w-64 bg-gray-800 text-white">
+        <!-- Mobile Menu Toggle -->
+        <div class="md:hidden p-4 flex justify-between items-center bg-gray-900">
+            <span class="font-bold" th:text="#{label.admin_menu}">Admin Menu</span>
+            <button id="sidebar-toggle" class="text-white">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <div id="sidebar-menu" class="hidden md:block p-4">
+            <h2 class="text-xl font-bold mb-6 border-b border-gray-700 pb-2" th:text="#{label.admin_dashboard}">Admin Dashboard</h2>
+            <ul class="space-y-2">
+                <li>
+                    <a href="/admin/dashboard" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-home mr-3"></i>
+                        <span th:text="#{label.home}">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/posts" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-file-alt mr-3"></i>
+                        <span th:text="#{label.posts}">Posts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/comments" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-comments mr-3"></i>
+                        <span th:text="#{label.comments}">Comments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/categories" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-folder mr-3"></i>
+                        <span th:text="#{label.categories}">Categories</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/tags" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-tags mr-3"></i>
+                        <span th:text="#{label.tags}">Tags</span>
+                    </a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="/admin/messages" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-message mr-3"></i>
+                        <span th:text="#{label.messages}">Messages</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/subscribers" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-users mr-3"></i>
+                        <span th:text="#{label.subscribers}">Subscribers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/my-profile" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-user-circle mr-3"></i>
+                        <span th:text="#{label.my_profile}">My Profile</span>
+                    </a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="/admin/users" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-users-cog mr-3"></i>
+                        <span th:text="#{label.users}">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/analytics" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-chart-bar mr-3"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="/admin/settings" class="flex items-center p-2 rounded hover:bg-gray-700">
+                        <i class="fas fa-cog mr-3"></i>
+                        <span th:text="#{label.settings}">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div layout:fragment="content" class="flex-grow">
+
+    </div>
+</div>
+
+<footer class="bg-gray-800 text-white py-6">
+    <div class="container mx-auto px-4 text-center">
+        <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2025</span> <span th:text="#{label.footer_copyright}">SivaLabs. All rights reserved.</span></p>
+    </div>
+</footer>
+
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/alpinejs/dist/cdn.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}"></script>
+<script>
+    $(document).ready(function(){
+        <!-- JavaScript for Mobile Menu -->
+        $("#mobile-menu-button").click(function(){
+            $("#mobile-menu").toggleClass("hidden");
+        })
+    });
+</script>
+<th:block layout:fragment="script-content">
+
+</th:block>
+</body>
+</html>

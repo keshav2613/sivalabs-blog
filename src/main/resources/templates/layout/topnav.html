@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:lang="|${#locale.language}-${#locale.country}|"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<!-- Fixed Top Navbar -->
+<nav th:fragment="topnav" class="bg-white shadow-md fixed top-0 left-0 right-0 z-50" >
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <!-- Logo -->
+            <a href="/" class="text-2xl font-bold text-blue-600" th:text="#{app.title}">SivaLabs Blog</a>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex space-x-8">
+                <a href="/login" class="text-gray-800 hover:text-blue-600 font-medium" sec:authorize="isAnonymous()" th:text="#{label.login}">Login</a>
+                <a href="/my-profile" class="text-gray-800 hover:text-blue-600 font-medium" sec:authorize="isAuthenticated()">
+                    <span sec:authentication="principal.name">User</span>
+                </a>
+                <a href="/admin" class="text-gray-800 hover:text-blue-600 font-medium" sec:authorize="hasAnyRole('ROLE_AUTHOR','ROLE_ADMIN')" th:text="#{label.administration}">Administration</a>
+                <a href="/logout" class="text-gray-800 hover:text-blue-600 font-medium" sec:authorize="isAuthenticated()" th:text="#{label.logout}">Logout</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-800 hover:text-blue-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 py-2">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col space-y-2">
+                <a href="/login" class="text-gray-800 hover:text-blue-600 font-medium py-2" sec:authorize="isAnonymous()" th:text="#{label.login}">Login</a>
+                <a href="/admin" class="text-gray-800 hover:text-blue-600 font-medium py-2" sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{label.administration}">Administration</a>
+                <a href="/logout" class="text-gray-800 hover:text-blue-600 font-medium" sec:authorize="isAuthenticated()" th:text="#{label.logout}">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

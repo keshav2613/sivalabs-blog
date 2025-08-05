@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">}">
+<body>
+<div class="flex-1 pt-5 p-8" layout:fragment="content">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800" th:text="#{label.manage_tags}">Manage Tags</h1>
+    <form method="post" action="/admin/tags/" th:method="post" th:action="@{/admin/tags}">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <!-- Action Buttons -->
+            <div class="flex justify-between mb-4" sec:authorize="hasRole('ROLE_ADMIN')">
+                <div class="flex space-x-2">
+                    <button id="delete-selected" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+                            hx-delete="/admin/tags"
+                            hx-on::before-request="checkTagsSelected(event)"
+                            hx-swap="none">
+                        <i class="fas fa-trash-alt mr-2"></i> <span th:text="#{label.delete}">Delete</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tags Table -->
+            <div class="overflow-x-auto overflow-y-auto max-h-160">
+                <table class="min-w-full bg-white">
+                    <thead>
+                    <tr class="bg-gray-200 text-gray-700">
+                        <th class="py-3 px-4 text-left w-12">
+                            <input type="checkbox" id="select-all" class="rounded">
+                        </th>
+                        <th class="py-3 px-4 text-left" th:text="#{label.label}">Label</th>
+                        <th class="py-3 px-4 text-left" th:text="#{label.slug}">Slug</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tags-table-body">
+                    <tr th:each="tag : ${tags}">
+                        <td class="py-3 px-4">
+                            <input type="checkbox" name="tagIds" class="tag-checkbox rounded" th:value="${tag.id}">
+                        </td>
+                        <td class="py-3 px-4">
+                            <div class="font-medium text-gray-800" th:text="${tag.label}">Label</div>
+                        </td>
+                        <td class="py-3 px-4">
+                            <div class="font-medium text-gray-800" th:text="${tag.slug}">Slug</div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block layout:fragment="script-content">
+    <script>
+        $(document).ready(function () {
+            $("#select-all").change(function () {
+                let isChecked = $(this).prop("checked");
+                $(".tag-checkbox").prop("checked", isChecked);
+            });
+
+            $(".tag-checkbox").change(function () {
+                let allChecked = $(".tag-checkbox:checked").length === $(".tag-checkbox").length;
+                $("#select-all").prop("checked", allChecked);
+            });
+        });
+
+        function checkTagsSelected(event) {
+            if ($(".tag-checkbox:checked").length === 0) {
+                event.preventDefault();
+                alert("Select at least one tag to delete.");
+                return;
+            }
+            if (confirm('Are you sure you want to proceed?')) {
+                event.detail.issueRequest();
+            }
+        }
+    </script>
+</th:block>
+</body>
+</html>
