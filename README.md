@@ -1,4 +1,7 @@
 # SivaLabs Blog
+![Spring Boot](https://img.shields.io/badge/Spring-Boot-6DB33F?logo=spring-boot)
+[![Maven Build](https://github.com/sivaprasadreddy/sivalabs-blog/actions/workflows/maven.yml/badge.svg)](https://github.com/sivaprasadreddy/sivalabs-blog/actions/workflows/maven.yml)
+
 SivaLabs Blog is a blog application developed using Java and Spring Boot.
 It provides a platform for publishing blog posts, managing categories and tags, handling user comments, and engaging with subscribers through email notifications.
 The application includes both public-facing features for readers and an administrative interface for content management.
